@@ -1,0 +1,16 @@
+fastapi
+uvicorn
+requests
+Pillow==8.4.0
+pyqt5
+# tkinter==0.1.0 # not needed for windows
+matplotlib==3.4.3
+numpy
+diffusers
+opencv-python
+transformers
+peft
+accelerate
+torch==2.4.1+cu124
+torchvision==0.19.1+cu124
+--index-url https://download.pytorch.org/whl/cu124

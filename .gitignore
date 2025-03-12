@@ -1,0 +1,6 @@
+__pycache__/
+src/output/
+src/app.log
+src/*.png
+src/*.jpg
+src/model_weights/*.safetensors

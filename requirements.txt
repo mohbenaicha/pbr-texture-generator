@@ -1,10 +1,12 @@
-#Pillow==8.4.0
+fastapi
+uvicorn
+Pillow==8.4.0
 numpy
 diffusers
 opencv-python
 transformers
 peft
 accelerate
-#torch==2.4.1+cu124
-#torchvision==0.19.1+cu124
-#--index-url https://download.pytorch.org/whl/cu124
+torch==2.4.1+cu124
+torchvision==0.19.1+cu124
+--index-url https://download.pytorch.org/whl/cu124

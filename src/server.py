@@ -55,5 +55,5 @@ async def generate_textures(
 
 if __name__ == "__main__":
     uvicorn.run(
-        "server:app", port=endpoint_config.port, log_level="debug", reload=True
+        "server:app", port=endpoint_config.port, log_level="debug", reload=False
     )

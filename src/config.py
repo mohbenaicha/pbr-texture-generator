@@ -5,7 +5,6 @@ import base64
 from utils import TorchDtypeWrapper, TorchDeviceWrapper
 
 
-
 class PipelineConfig(BaseModel):
     width: int = Field(1024, ge=256, le=2048, description="Width of the output image")
     height: int = Field(1024, ge=256, le=2048, description="Height of the output image")
@@ -14,16 +13,24 @@ class PipelineConfig(BaseModel):
     controlnet_conditioning_scale: float = Field(
         0.99, ge=0, le=1.0, description="Strength of ControlNet conditioning"
     )
-    precision: TorchDtypeWrapper = TorchDtypeWrapper(torch.float16).dtype # TODO probably better to use field validator...
-    device: TorchDeviceWrapper = TorchDeviceWrapper(torch.device("cuda" if torch.cuda.is_available() else "cpu")).device # TODO probably better to use field validator...
+    precision: TorchDtypeWrapper = TorchDtypeWrapper(
+        torch.float16
+    ).dtype  # TODO probably better to use field validator...
+    device: TorchDeviceWrapper = TorchDeviceWrapper(
+        torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    ).device  # TODO probably better to use field validator...
     rank: float = 9.7
     vae_checkpoint: str = (
         "madebyollin/sdxl-vae-fp16-fix"
         if precision == torch.float16
         else "stabilityai/sdxl-vae"
     )
-    small_vae_ec_checkpoint: str = "madebyollin/taesdxl" # doesn't see to be compatible with SDXL 1.0
+    small_vae_ec_checkpoint: str = (
+        "madebyollin/taesdxl"  # doesn't see to be compatible with SDXL 1.0
+    )
     controlnet_checkpoint: str = "diffusers/controlnet-canny-sdxl-1.0"
+    control_lora_path: str = "stabilityai/control-lora"
+    control_lora_name: str = "control-LoRAs-rank256/control-lora-canny-rank256.safetensors"
     pipeline_checkpoint: str = "stabilityai/stable-diffusion-xl-base-1.0"
     lora_weights_path: str = "./model_weights"
     lora_weights_name: str = "texture-synthesis-topdown-base-condensed.safetensors"
@@ -33,11 +40,19 @@ class ProcessingConfig(BaseModel):
     user_image: Optional[str] = Field(None, description="Base64 encoded user image")
     user_mask: Optional[str] = Field(None, description="Base64 encoded user mask")
     maps: Set[str] = Field(
-        default_factory=lambda: {"specular", "albedo", "rough", "metal", "height", "normal", "ambientocl"},
+        default_factory=lambda: {
+            "specular",
+            "albedo",
+            "rough",
+            "metal",
+            "height",
+            "normal",
+            "ambientocl",
+        },
         description="Set of texture maps, any number of the following: specular, albedo, rough, metal, height, normal, ambientocl",
     )
     batch: bool = False
-    batch_size: int = 3 
+    batch_size: int = 3
     prompt: str = ""
 
     # Validate that the maps field contains valid map names
@@ -54,7 +69,9 @@ class ProcessingConfig(BaseModel):
         }
         invalid_maps = set(v) - allowed_maps
         if invalid_maps:
-            raise ValueError(f"Invalid maps: {invalid_maps}. Allowed maps are: {allowed_maps}")
+            raise ValueError(
+                f"Invalid maps: {invalid_maps}. Allowed maps are: {allowed_maps}"
+            )
         return v
 
     # Validate that the user_image and user_mask fields contain valid Base64 strings

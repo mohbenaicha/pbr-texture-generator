@@ -228,7 +228,7 @@ def qimage_to_base64(image, format="PNG") -> str:
     return base64.b64encode(buffer.data().data()).decode("utf-8")  # Convert to Base64
 
 
-def set_seed(fixed_seed: int = 69420, randomize: bool = True): # seed was 1042
+def set_seed(fixed_seed: int = 5898, randomize: bool = True): # seed was 1042, 69420
     """
     Set seed for reproducibility.
     Args:

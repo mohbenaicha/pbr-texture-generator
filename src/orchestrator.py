@@ -44,7 +44,7 @@ class PBRTextureGenerator(I_TextureGenerator):
 
     def _setup_pipeline(self) -> tuple:
         # VAE setup
-        set_seed(randomize=True)
+        set_seed(randomize=False)
 
         generator = torch.Generator(device=pipeline_config.device)
         

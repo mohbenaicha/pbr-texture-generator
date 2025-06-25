@@ -79,7 +79,12 @@ class ProcessingConfig(BaseModel):
     @classmethod
     def validate_base64(cls, v):
         """Ensure the field contains a valid Base64-encoded string"""
+        if v is None:
+            return v
         try:
+            # Handle data URLs by stripping the prefix
+            if v.startswith('data:image/'):
+                v = v.split(',', 1)[1]
             base64.b64decode(v, validate=True)  # Check if it's valid Base64
         except Exception:
             raise ValueError("Invalid Base64 string")

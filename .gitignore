@@ -1,6 +1,33 @@
+# Backend ignores (from your existing backend/.gitignore)
 __pycache__/
-src/output/
-src/app.log
-src/*.png
-src/*.jpg
-src/model_weights/*.safetensors
+backend/src/output/
+backend/src/app.log
+backend/src/*.png
+backend/src/*.jpg
+backend/src/model_weights/*.safetensors
+
+# Frontend ignores (typical React/Node.js ignores)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+build/
+dist/
+.DS_Store
+*.log
+
+# IDE/Editor ignores
+.vscode/settings.json
+.vscode/launch.json
+.vscode/extensions.json
+.idea/
+*.swp
+*.swo
+
+# OS ignores
+Thumbs.db
